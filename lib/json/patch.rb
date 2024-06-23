@@ -5,6 +5,11 @@ require_relative 'patch/version'
 module JSON
   module Patch
     class Error < StandardError; end
-    # Your code goes here...
+
+    class << self
+      def call(document, _patch)
+        document
+      end
+    end
   end
 end

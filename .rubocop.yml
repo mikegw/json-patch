@@ -6,5 +6,23 @@ AllCops:
   TargetRubyVersion: 3.3
   NewCops: enable
 
+Layout/LineLength:
+  Max: 90
+
+RSpec/DescribeMethod:
+  Exclude:
+    - 'spec/*.rb'
+
+RSpec/RepeatedExampleGroupBody:
+  Exclude:
+    - 'spec/json/patch_spec.rb' # Specs not yet implemented
+
+RSpec/SpecFilePathFormat:
+  Exclude:
+    - 'spec/*.rb'
+
 Style/Documentation:
+  Enabled: false
+
+Style/EmptyElse:
   Enabled: false
