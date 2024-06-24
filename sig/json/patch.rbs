@@ -1,6 +1,10 @@
 module JSON
   module Patch
     VERSION: String
-    # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+
+    class Error < StandardError
+    end
+
+    def self.call: (String document, String _patch) -> untyped
   end
 end

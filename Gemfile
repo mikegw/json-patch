@@ -18,4 +18,5 @@ group :development do
   gem 'rubocop-rspec', require: false
 
   gem 'simplecov', '~> 0.22.0'
+  gem 'steep'
 end
