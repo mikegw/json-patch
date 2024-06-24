@@ -1,0 +1,44 @@
+module JSON
+  module Patch
+    class Document
+      class Pointer
+        @reference_tokens: Array[ReferenceToken]
+
+        DECODED_CHARACTERS: ::Hash[::String, "~" | "/"]
+
+        class Error < Patch::Error
+        end
+
+        class InvalidArrayIndex < Error
+          @reference_token: ReferenceToken
+
+          attr_reader reference_token: untyped
+
+          def initialize: (ReferenceToken reference_token, String message) -> void
+
+          def message: () -> ::String
+        end
+
+        class ReferenceToken < SimpleDelegator
+          include Kernel
+
+          def to_int: () -> Integer
+
+          alias to_i to_int
+
+          def start_with?: (*Regexp | string prefixes) -> bool
+        end
+
+        attr_reader reference_tokens: Array[ReferenceToken]
+
+        def initialize: (untyped raw) -> void
+
+        private
+
+        def build_token: (String escaped) -> ReferenceToken
+
+        def decode_escaped_characters: (String token) -> String
+      end
+    end
+  end
+end

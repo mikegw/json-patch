@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'patch/version'
-
 module JSON
   module Patch
     class Error < StandardError; end
@@ -13,3 +11,5 @@ module JSON
     end
   end
 end
+require_relative 'patch/document'
+require_relative 'patch/version'

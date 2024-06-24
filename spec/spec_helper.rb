@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require 'json/patch'
-
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  enable_coverage :branch
+  add_filter 'spec'
+end
+
+require 'json/patch'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -11,6 +11,7 @@ target :lib do
   # ignore "lib/templates/*.rb"
 
   library 'json'
+  library 'delegate'
 
   # configure_code_diagnostics(D::Ruby.default)      #  (applies by default)
   # configure_code_diagnostics(D::Ruby.strict)       # `strict` diagnostics setting
