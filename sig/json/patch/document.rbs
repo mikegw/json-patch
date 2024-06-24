@@ -1,8 +1,34 @@
 module JSON
   module Patch
     class Document
+      @raw: untyped
+
       class Error < Patch::Error
       end
+
+      def initialize: (String raw) -> void
+
+      def fetch: (String raw_pointer) -> untyped
+
+      def add: (String raw_pointer, untyped value) -> untyped
+
+      def remove: (String raw_pointer) -> untyped
+
+      def to_json: (*untyped) -> String
+
+      private
+
+      def split_pointer: (String raw_pointer) ->  [untyped, Pointer::ReferenceToken]
+
+      def fetch_container: (Array[Pointer::ReferenceToken] reference_tokens) -> untyped
+
+      def fetch_reference: (untyped raw_document, Pointer::ReferenceToken token) -> untyped
+
+      def validate_container!: (untyped raw_document, Pointer::ReferenceToken token) -> (nil | untyped)
+
+      def validate_index!: (untyped container, Pointer::ReferenceToken token, ?allow_next_element: bool) -> (nil | untyped)
+
+      def validate_key!: (untyped container, Pointer::ReferenceToken token) -> (nil | untyped)
     end
   end
 end

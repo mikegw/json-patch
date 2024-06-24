@@ -1,0 +1,36 @@
+module JSON
+  module Patch
+    class TargetDocument
+      include Duplicate
+
+      class Error < Patch::Error
+      end
+
+      @raw: untyped
+
+      def initialize: (untyped raw) -> void
+
+      def fetch: (String raw_pointer) -> untyped
+
+      def add: (String raw_pointer, untyped value) -> untyped
+
+      def remove: (String raw_pointer) -> untyped
+
+      def to_json: (*untyped) -> (String | nil)
+
+      private
+
+      def split_pointer: (String raw_pointer) ->  [untyped, Document::Pointer::ReferenceToken]
+
+      def fetch_container: (Array[Document::Pointer::ReferenceToken] reference_tokens) -> untyped
+
+      def fetch_reference: (untyped raw_document, Document::Pointer::ReferenceToken token) -> untyped
+
+      def validate_container!: (untyped raw_document, Document::Pointer::ReferenceToken token) -> (nil | untyped)
+
+      def validate_index!: (untyped container, Document::Pointer::ReferenceToken token, ?allow_next_element: bool) -> (nil | untyped)
+
+      def validate_key!: (untyped container, Document::Pointer::ReferenceToken token) -> (nil | untyped)
+    end
+  end
+end

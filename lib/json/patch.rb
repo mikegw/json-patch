@@ -11,5 +11,7 @@ module JSON
     end
   end
 end
+
 require_relative 'patch/document'
+require_relative 'patch/target_document'
 require_relative 'patch/version'
