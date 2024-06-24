@@ -1,34 +1,20 @@
 module JSON
   module Patch
     class Document
-      @raw: untyped
+      @operations: Array[Operation::Base]
 
-      class Error < Patch::Error
-      end
+      include Enumerable[Operation::Base]
+      include Duplicate
 
-      def initialize: (String raw) -> void
+      extend Forwardable
 
-      def fetch: (String raw_pointer) -> untyped
+      attr_reader operations: Array[Operation::Base]
 
-      def add: (String raw_pointer, untyped value) -> untyped
+      def initialize: (Array[Hash[String, untyped]] | String raw) -> void
 
-      def remove: (String raw_pointer) -> untyped
+      def apply: (TargetDocument target_document) -> void
 
-      def to_json: (*untyped) -> String
-
-      private
-
-      def split_pointer: (String raw_pointer) ->  [untyped, Pointer::ReferenceToken]
-
-      def fetch_container: (Array[Pointer::ReferenceToken] reference_tokens) -> untyped
-
-      def fetch_reference: (untyped raw_document, Pointer::ReferenceToken token) -> untyped
-
-      def validate_container!: (untyped raw_document, Pointer::ReferenceToken token) -> (nil | untyped)
-
-      def validate_index!: (untyped container, Pointer::ReferenceToken token, ?allow_next_element: bool) -> (nil | untyped)
-
-      def validate_key!: (untyped container, Pointer::ReferenceToken token) -> (nil | untyped)
+      def each: () { (Operation::Base) -> boolish } -> void
     end
   end
 end

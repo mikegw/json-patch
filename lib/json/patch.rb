@@ -5,13 +5,19 @@ module JSON
     class Error < StandardError; end
 
     class << self
-      def call(document, _patch)
-        document
+      def call(raw_target_document, raw_patch_document)
+        target_document = TargetDocument.new(raw_target_document)
+        patch_document = Document.new(raw_patch_document)
+
+        patch_document.apply(target_document)
+
+        target_document.to_json
       end
     end
   end
 end
 
 require_relative 'patch/document'
+require_relative 'patch/operation'
 require_relative 'patch/target_document'
 require_relative 'patch/version'

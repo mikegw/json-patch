@@ -13,10 +13,6 @@ RSpec/DescribeMethod:
   Exclude:
     - 'spec/*.rb'
 
-RSpec/RepeatedExampleGroupBody:
-  Exclude:
-    - 'spec/json/patch_spec.rb' # Specs not yet implemented
-
 RSpec/SpecFilePathFormat:
   Exclude:
     - 'spec/*.rb'

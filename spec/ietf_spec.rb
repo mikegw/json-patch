@@ -4,8 +4,7 @@ require 'json'
 
 tests = JSON.parse(File.read(File.join(__dir__, './tests.json')))
 
-RSpec.describe JSON::Patch, 'satisfies the IETF patch tests',
-               skip: 'We do not expect these to pass yet' do
+RSpec.describe JSON::Patch, 'satisfies the IETF patch tests' do
   tests.each_with_index do |test, index|
     next if test['disabled']
 

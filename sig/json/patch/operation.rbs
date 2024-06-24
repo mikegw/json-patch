@@ -1,0 +1,45 @@
+module JSON
+  module Patch
+    module Operation
+      def self.new: (Hash[String, untyped] raw_operation) -> Base
+
+      class Base
+        @raw: Hash[String, untyped]
+
+        def initialize: (Hash[String, untyped]) -> void
+
+        def call: (TargetDocument _document) -> void
+
+        private
+
+        def fetch_member: (String key, ?allow_nil: bool) -> untyped
+      end
+
+      class Add < Base
+        def call: (TargetDocument document) -> untyped
+      end
+
+      class Remove < Base
+        def call: (TargetDocument document) -> untyped
+      end
+
+      class Replace < Base
+        def call: (TargetDocument document) -> untyped
+      end
+
+      class Move < Base
+        def call: (TargetDocument document) -> untyped
+      end
+
+      class Copy < Base
+        include Duplicate
+
+        def call: (TargetDocument document) -> untyped
+      end
+
+      class Test < Base
+        def call: (TargetDocument document) -> (nil | untyped)
+      end
+    end
+  end
+end
