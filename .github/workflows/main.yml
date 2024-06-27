@@ -14,19 +14,28 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - jruby-9.4
-          - truffleruby
           - "3.3"
           - "3.2"
-          - "3.1"
-          - "3.0"
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
+
+    - name: find ruby version
+      id: find
+      run: echo ruby_version=$(ruby -v | grep -oP "\d\.\d\.\d") >> $GITHUB_OUTPUT
+
+    - name: echo ruby version
+      run: echo ${{ steps.find.outputs.ruby_version }}
+
+    - name: Install RBS collection
+      run: bundle exec rbs collection install
+      if: steps.find.outputs.ruby_version >= '3.3.2'
+
     - name: Run the default task
       run: bundle exec rake

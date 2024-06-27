@@ -19,5 +19,6 @@ group :development do
   gem 'rubocop-rake', require: false
   gem 'rubocop-rspec', require: false
 
+  gem 'rbs', '~> 3.5'
   gem 'steep'
 end

@@ -14,4 +14,7 @@ RuboCop::RakeTask.new
 require 'steep/rake_task'
 Steep::RakeTask.new
 
-task default: %i[rubocop steep spec]
+default_tasks = %i[rubocop spec]
+default_tasks << :steep if RUBY_VERSION >= '3.3.2'
+
+task default: default_tasks
