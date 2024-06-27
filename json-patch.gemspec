@@ -22,11 +22,12 @@ Gem::Specification.new do |spec|
   spec.files =
     Dir.glob('lib/**/*') +
     Dir.glob('sig/**/*') +
-    %w[CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt NAME.md README.md]
+    %w[CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt README.md]
 
   spec.require_paths = ['lib']
 
   spec.add_dependency 'duplicate', '~> 1'
+  spec.add_dependency 'json-pointer', '~> 1'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end

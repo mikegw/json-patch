@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'duplicate'
+require 'json/pointer'
 
 module JSON
   module Patch
@@ -46,17 +47,19 @@ module JSON
       private
 
       def split_pointer(raw_pointer)
-        pointer = Document::Pointer.new(raw_pointer)
+        pointer = JSON::Pointer.new(raw_pointer)
         *container_reference_tokens, last_token = pointer.reference_tokens
-        # @type var last_token: Document::Pointer::ReferenceToken
+        # @type var last_token: JSON::Pointer::ReferenceToken
 
         container = fetch_container(container_reference_tokens)
 
         [container, last_token]
+      rescue JSON::Pointer::Error => e
+        raise Error, e.message
       end
 
       def fetch_container(reference_tokens)
-        validate_container!(@raw, Document::Pointer::ReferenceToken.new(''))
+        validate_container!(@raw, JSON::Pointer::ReferenceToken.new(''))
         return @raw if reference_tokens.none?
 
         reference_tokens.inject(@raw) do |raw_document, token|
@@ -87,6 +90,8 @@ module JSON
         return if token.to_i == container.length && allow_next_element
 
         raise Error, "token out of range: #{token}"
+      rescue JSON::Pointer::Error => e
+        raise Error, e.message
       end
 
       def validate_key!(container, token)
@@ -99,5 +104,3 @@ module JSON
     end
   end
 end
-
-require_relative 'document/pointer'

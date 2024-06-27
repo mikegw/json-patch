@@ -5,8 +5,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in json-patch.gemspec
 gemspec
 
-gem 'duplicate'
-gem 'rake'
+gem 'json-pointer', '~> 1.0', github: 'mikegw/json-pointer'
 
 group :test do
   gem 'rspec'
@@ -14,6 +13,7 @@ group :test do
 end
 
 group :development do
+  gem 'rake'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rake', require: false

@@ -20,17 +20,17 @@ module JSON
 
       private
 
-      def split_pointer: (String raw_pointer) ->  [untyped, Document::Pointer::ReferenceToken]
+      def split_pointer: (String raw_pointer) ->  [untyped, JSON::Pointer::ReferenceToken]
 
-      def fetch_container: (Array[Document::Pointer::ReferenceToken] reference_tokens) -> untyped
+      def fetch_container: (Array[JSON::Pointer::ReferenceToken] reference_tokens) -> untyped
 
-      def fetch_reference: (untyped raw_document, Document::Pointer::ReferenceToken token) -> untyped
+      def fetch_reference: (untyped raw_document, JSON::Pointer::ReferenceToken token) -> untyped
 
-      def validate_container!: (untyped raw_document, Document::Pointer::ReferenceToken token) -> (nil | untyped)
+      def validate_container!: (untyped raw_document, JSON::Pointer::ReferenceToken token) -> (nil | untyped)
 
-      def validate_index!: (untyped container, Document::Pointer::ReferenceToken token, ?allow_next_element: bool) -> (nil | untyped)
+      def validate_index!: (untyped container, JSON::Pointer::ReferenceToken token, ?allow_next_element: bool) -> (nil | untyped)
 
-      def validate_key!: (untyped container, Document::Pointer::ReferenceToken token) -> (nil | untyped)
+      def validate_key!: (untyped container, JSON::Pointer::ReferenceToken token) -> (nil | untyped)
     end
   end
 end
