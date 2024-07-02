@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 
   spec.homepage = 'https://github.com/mikegw/json-patch'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.2'
+  spec.required_ruby_version = '>= 3.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/mikegw/json-patch'
@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'duplicate', '~> 1'
-  spec.add_dependency 'json-pointer', '~> 1'
+  spec.add_dependency 'json-pointer', '~> 1', '>= 1.1'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
