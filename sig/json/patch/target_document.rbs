@@ -16,7 +16,7 @@ module JSON
 
       def remove: (String raw_pointer) -> untyped
 
-      def to_json: (*untyped) -> (String | nil)
+      def to_json: () -> (String | nil)
 
       private
 

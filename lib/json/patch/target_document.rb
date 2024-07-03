@@ -40,8 +40,8 @@ module JSON
         container.send(remove_method, last_token)
       end
 
-      def to_json(*args)
-        JSON.generate(@raw, *args) if @raw
+      def to_json(*_args)
+        JSON.generate(@raw) if @raw
       end
 
       private
