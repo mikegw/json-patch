@@ -1,4 +1,4 @@
-# JSON::Patch
+# JSON::Patch [![Ruby](https://github.com/mikegw/json-patch/actions/workflows/main.yml/badge.svg)](https://github.com/mikegw/json-patch/actions/workflows/main.yml) [![GitHub version](https://badge.fury.io/gh/mikegw%2Fjson-patch.svg)](https://badge.fury.io/gh/mikegw%2Fjson-patch)
 
 A bare-bones implementation of [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902).
 
