@@ -5,8 +5,8 @@ module JSON
     module Operation
       class Test < Base
         def call(document)
-          path = fetch_member('path')
-          expected = fetch_member('value', allow_nil: true)
+          path = fetch_member(:path)
+          expected = fetch_member(:value, allow_nil: true)
 
           actual = document.fetch(path)
           return if expected == actual

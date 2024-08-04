@@ -3,26 +3,40 @@
 module JSON
   module Patch
     module Operation
-      def self.new(raw_operation)
-        case raw_operation['op']
-        when 'add' then Add.new(raw_operation)
-        when 'remove' then Remove.new(raw_operation)
-        when 'replace' then Replace.new(raw_operation)
-        when 'move' then Move.new(raw_operation)
-        when 'copy' then Copy.new(raw_operation)
-        when 'test' then Test.new(raw_operation)
-        else
-          raise Error, "Unsupported operation: #{raw_operation['op'].inspect}"
+      class << self
+        def new(raw_operation)
+          raw_operation = raw_operation.transform_keys(&:to_sym)
+          operation_class = determine_operation_class(raw_operation[:op])
+
+          operation_class.new(raw_operation)
+        end
+
+        private
+
+        def determine_operation_class(name)
+          case name
+          when 'add' then Add
+          when 'copy' then Copy
+          when 'move' then Move
+          when 'remove' then Remove
+          when 'replace' then Replace
+          when 'test' then Test
+          else raise Error, "Unsupported operation: #{name.inspect}"
+          end
         end
       end
 
       class Base
         def initialize(raw)
-          @raw = raw
+          @raw = raw.transform_keys(&:to_sym)
         end
 
         def call(_document)
           raise NoMethodError, "#{self.class} is missing an implementation of #call"
+        end
+
+        def to_json(*_args)
+          @raw.to_json
         end
 
         private

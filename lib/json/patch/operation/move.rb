@@ -5,8 +5,8 @@ module JSON
     module Operation
       class Move < Base
         def call(document)
-          path = fetch_member('path')
-          from = fetch_member('from')
+          path = fetch_member(:path)
+          from = fetch_member(:from)
 
           removed = document.remove(from)
           document.add(path, removed)

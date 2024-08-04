@@ -8,13 +8,15 @@ module JSON
 
       extend Forwardable
 
+      def self.build: { (Builder) -> void } -> Document
+
       attr_reader operations: Array[Operation::Base]
 
-      def initialize: (Array[Hash[String, untyped]] | String raw) -> void
+      def initialize: (Array[Hash[String | Symbol, untyped]] | String raw) -> void
 
       def apply: (TargetDocument target_document) -> void
 
-      def each: () { (Operation::Base) -> boolish } -> void
+      def each: { (Operation::Base) -> boolish } -> void
     end
   end
 end

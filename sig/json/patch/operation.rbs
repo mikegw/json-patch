@@ -1,18 +1,20 @@
 module JSON
   module Patch
     module Operation
-      def self.new: (Hash[String, untyped] raw_operation) -> Base
+      def self.new: (Hash[Symbol | String, untyped] raw_operation) -> Base
 
       class Base
-        @raw: Hash[String, untyped]
+        @raw: Hash[Symbol, untyped]
 
-        def initialize: (Hash[String, untyped]) -> void
+        def initialize: (Hash[Symbol | String, untyped]) -> void
 
         def call: (TargetDocument _document) -> void
 
+        def to_json: (*untyped) -> String
+
         private
 
-        def fetch_member: (String key, ?allow_nil: bool) -> untyped
+        def fetch_member: (Symbol key, ?allow_nil: bool) -> untyped
       end
 
       class Add < Base
@@ -40,6 +42,17 @@ module JSON
       class Test < Base
         def call: (TargetDocument document) -> (nil | untyped)
       end
+
+      private
+
+      def self.determine_operation_class: (String) -> (
+        singleton(Add) |
+        singleton(Copy) |
+        singleton(Move) |
+        singleton(Remove) |
+        singleton(Replace) |
+        singleton(Test)
+      )
     end
   end
 end

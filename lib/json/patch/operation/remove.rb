@@ -5,7 +5,7 @@ module JSON
     module Operation
       class Remove < Base
         def call(document)
-          path = fetch_member('path')
+          path = fetch_member(:path)
 
           document.remove(path)
         end
