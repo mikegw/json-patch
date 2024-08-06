@@ -4,14 +4,20 @@ module JSON
   module Patch
     module Operation
       class Test < Base
+        attr_reader :value
+
         def call(document)
-          path = fetch_member(:path)
-          expected = fetch_member(:value, allow_nil: true)
-
           actual = document.fetch(path)
-          return if expected == actual
+          return if actual == value
 
-          raise Error, "Test failed: expected #{path} to equal #{expected}, got #{actual}"
+          raise Error, "Test failed: expected #{path} to equal #{value}, got #{actual}"
+        end
+
+        private
+
+        def populate!
+          super
+          @value = fetch_member(:value, allow_nil: true)
         end
       end
     end

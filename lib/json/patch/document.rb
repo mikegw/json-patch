@@ -21,10 +21,12 @@ module JSON
       end
 
       def initialize(raw)
+        (@operations = raw and return) if raw.is_a?(Array) && raw.all?(Operation::Base)
+
         raw_operations = raw.is_a?(String) ? JSON.parse(raw) : duplicate(raw)
         raw_operations.each { _1.transform_keys!(&:to_sym) }
 
-        @operations = raw_operations.map { Operation.new(_1) }
+        @operations = raw_operations.map { Operation.new(**_1) }
       end
 
       def apply(target_document)

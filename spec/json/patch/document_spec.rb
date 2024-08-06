@@ -50,4 +50,14 @@ RSpec.describe JSON::Patch::Document do
       expect(document.to_json).to eq('[{"op":"test","path":"/foo","value":"bar"}]')
     end
   end
+
+  context 'when attempting to build a document with an invalid path' do
+    it 'raises an error' do
+      expect do
+        described_class.build do |doc|
+          doc.replace 'foo', value: 'bar'
+        end
+      end.to raise_error(JSON::Patch::Error)
+    end
+  end
 end

@@ -4,12 +4,18 @@ module JSON
   module Patch
     module Operation
       class Copy < Base
-        def call(document)
-          path = fetch_member(:path)
-          from = fetch_member(:from)
+        attr_reader :from
 
-          from_target = document.fetch(from)
+        def call(document)
+          from_target = document.fetch(@from)
           document.add(path, duplicate(from_target))
+        end
+
+        private
+
+        def populate!
+          super
+          @from = fetch_member(:from)
         end
       end
     end

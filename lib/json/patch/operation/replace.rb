@@ -4,12 +4,18 @@ module JSON
   module Patch
     module Operation
       class Replace < Base
-        def call(document)
-          path = fetch_member(:path)
-          value = fetch_member(:value, allow_nil: true)
+        attr_reader :value
 
+        def call(document)
           document.remove(path)
           document.add(path, value)
+        end
+
+        private
+
+        def populate!
+          super
+          @value = fetch_member(:value, allow_nil: true)
         end
       end
     end

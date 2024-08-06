@@ -4,11 +4,11 @@ module JSON
   module Patch
     module Operation
       class << self
-        def new(raw_operation)
+        def new(**raw_operation)
           raw_operation = raw_operation.transform_keys(&:to_sym)
           operation_class = determine_operation_class(raw_operation[:op])
 
-          operation_class.new(raw_operation)
+          operation_class.new(**raw_operation)
         end
 
         private
@@ -27,8 +27,12 @@ module JSON
       end
 
       class Base
-        def initialize(raw)
+        attr_reader :path
+
+        def initialize(**raw)
           @raw = raw.transform_keys(&:to_sym)
+
+          populate!
         end
 
         def call(_document)
@@ -49,6 +53,14 @@ module JSON
           end
 
           @raw[key]
+        end
+
+        def populate!
+          @path = fetch_member(:path)
+
+          JSON::Pointer.new(@path) # will throw error if invalid path
+        rescue JSON::Pointer::Error => e
+          raise JSON::Patch::Error, e.message
         end
       end
     end

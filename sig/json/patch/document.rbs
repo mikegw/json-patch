@@ -12,7 +12,7 @@ module JSON
 
       attr_reader operations: Array[Operation::Base]
 
-      def initialize: (Array[Hash[String | Symbol, untyped]] | String raw) -> void
+      def initialize: (Array[Hash[String | Symbol, untyped]] | Array[Operation::Base] | String raw) -> void
 
       def apply: (TargetDocument target_document) -> void
 
