@@ -13,6 +13,9 @@ or add the following to your gemfile:
     $ gem 'json-patch', github: 'mikegw/json-patch'
 
 ## Usage
+
+### Applying Patch Documents
+
 The simplest way to use this library is to provide a target document string and a patch document string to `JSON::Patch.call`.
 This will return a new JSON string with the patch document applied.
 
@@ -33,6 +36,31 @@ patch_document = JSON::Patch::Document.new(patch_document)
 patch_document.apply(target_document)
 
 target_document.to_json #=> '{"foos":["foo","another foo"]}'
+```
+
+### Building Patch Documents
+
+This library exposes a DSL for building patch documents as follows:
+
+```ruby
+patch_document = JSON::Patch::Document.build do |doc|
+  doc.add '/foo', value: 'bar'
+  doc.copy from: '/foo', path: '/bar'
+  doc.move from: '/bar', path: '/baz'
+  doc.remove '/foo'
+  doc.replace '/baz', value: 'baz'
+  doc.test '/baz', value: 'baz'
+end
+
+patch_document.to_json #=>
+# '[
+#    {"op":"add", "path":"/foo", "value":"bar"},
+#    {"op":"copy", "from":"/foo", "path":"/bar"},
+#    {"op":"move", "from":"/bar", "path":"/baz"},
+#    {"op":"remove", "path":"/foo"},
+#    {"op":"replace", "path":"/baz", "value":"baz"},
+#    {"op":"test", "path":"/baz", "value":"baz"}
+#  ]'
 ```
 
 ## Development
