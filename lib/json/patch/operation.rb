@@ -21,7 +21,7 @@ module JSON
           when 'remove' then Remove
           when 'replace' then Replace
           when 'test' then Test
-          else raise Error, "Unsupported operation: #{name.inspect}"
+          else raise UnknownOperation, "Unsupported operation: #{name.inspect}"
           end
         end
       end
@@ -46,10 +46,12 @@ module JSON
         private
 
         def fetch_member(key, allow_nil: false)
-          raise Error, "Operation missing required member: #{key}" unless @raw.key?(key)
+          unless @raw.key?(key)
+            raise InvalidOperation, "Operation missing required member: #{key}"
+          end
 
           if !allow_nil && @raw[key].nil?
-            raise Error, "Invalid value for key #{key.inspect}: `null`"
+            raise InvalidOperation, "Invalid value for key #{key.inspect}: `null`"
           end
 
           @raw[key]
@@ -60,7 +62,7 @@ module JSON
 
           JSON::Pointer.new(@path) # will throw error if invalid path
         rescue JSON::Pointer::Error => e
-          raise JSON::Patch::Error, e.message
+          raise InvalidPointer, e.message
         end
       end
     end

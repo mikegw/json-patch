@@ -3,6 +3,12 @@
 module JSON
   module Patch
     class Error < StandardError; end
+    class InvalidOperation < Error; end
+    class InvalidPointer < Error; end
+    class MissingTarget < Error; end
+    class TestFailed < Error; end
+    class TokenOutOfRange < Error; end
+    class UnknownOperation < Error; end
 
     class << self
       def call(raw_target_document, raw_patch_document)

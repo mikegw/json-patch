@@ -5,6 +5,24 @@ module JSON
     class Error < StandardError
     end
 
+    class InvalidOperation < Error
+    end
+
+    class InvalidPointer < Error
+    end
+
+    class MissingTarget < Error
+    end
+
+    class TestFailed < Error
+    end
+
+    class TokenOutOfRange < Error
+    end
+
+    class UnknownOperation < Error
+    end
+
     def self.call: (String raw_target_document, String raw_patch_document) -> (String | nil)
   end
 end

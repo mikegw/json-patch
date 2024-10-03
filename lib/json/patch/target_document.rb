@@ -6,8 +6,6 @@ require 'json/pointer'
 module JSON
   module Patch
     class TargetDocument
-      class Error < Patch::Error; end
-
       def initialize(raw)
         @raw = raw.is_a?(String) ? JSON.parse(raw) : duplicate(raw)
       end
@@ -48,23 +46,25 @@ module JSON
 
       def split_pointer(raw_pointer)
         pointer = JSON::Pointer.new(raw_pointer)
-        *container_reference_tokens, last_token = pointer.reference_tokens
-        # @type var last_token: JSON::Pointer::ReferenceToken
 
-        container = fetch_container(container_reference_tokens)
+        container = fetch_container(pointer.reference_tokens)
+        last_token = pointer.reference_tokens.last || empty_token
 
         [container, last_token]
       rescue JSON::Pointer::Error => e
-        raise Error, e.message
+        raise InvalidPointer, e.message
       end
 
       def fetch_container(reference_tokens)
-        validate_container!(@raw, JSON::Pointer::ReferenceToken.new(''))
+        validate_container!(@raw, empty_token, reference_tokens.first || empty_token)
         return @raw if reference_tokens.none?
 
-        reference_tokens.inject(@raw) do |raw_document, token|
+        reference_tokens.each_cons(2).inject(@raw) do |raw_document, tokens|
+          # @type var tokens:[JSON::Pointer::ReferenceToken,JSON::Pointer::ReferenceToken]
+          token, next_token = tokens
+
           container = fetch_reference(raw_document, token)
-          validate_container!(container, token)
+          validate_container!(container, token, next_token)
 
           container
         end
@@ -77,10 +77,13 @@ module JSON
         raw_document[token]
       end
 
-      def validate_container!(raw_document, token)
-        return if raw_document.is_a?(Array) || raw_document.is_a?(Hash)
+      def validate_container!(raw_document, token, next_token)
+        return if raw_document.is_a?(Hash)
 
-        raise Error, "expected #{token} to reference a container"
+        expected = /^(0|[1-9][0-9]*|-)$/.match?(next_token.to_s) ? :array : :object
+        return if raw_document.is_a?(Array) && expected == :array
+
+        raise MissingTarget, "expected #{token} to reference an #{expected}"
       end
 
       def validate_index!(container, token, allow_next_element: false)
@@ -89,9 +92,9 @@ module JSON
         return if token.to_i < container.length
         return if token.to_i == container.length && allow_next_element
 
-        raise Error, "token out of range: #{token}"
+        raise TokenOutOfRange, "token out of range: #{token}"
       rescue JSON::Pointer::Error => e
-        raise Error, e.message
+        raise InvalidPointer, e.message
       end
 
       def validate_key!(container, token)
@@ -99,7 +102,11 @@ module JSON
 
         return if container.key?(token)
 
-        raise Error, "target does not exist at location: #{token}"
+        raise MissingTarget, "target does not exist at location: #{token}"
+      end
+
+      def empty_token
+        JSON::Pointer::ReferenceToken.new('')
       end
     end
   end

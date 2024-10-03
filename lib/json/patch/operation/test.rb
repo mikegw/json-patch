@@ -10,7 +10,8 @@ module JSON
           actual = document.fetch(path)
           return if actual == value
 
-          raise Error, "Test failed: expected #{path} to equal #{value}, got #{actual}"
+          message = "Test failed: expected #{path} to equal #{value}, got #{actual}"
+          raise TestFailed, message
         end
 
         private

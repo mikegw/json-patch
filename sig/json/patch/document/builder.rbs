@@ -2,23 +2,23 @@ module JSON
   module Patch
     class Document
       class Builder
-        @operations: Array[Hash[Symbol, untyped]]
+        @operations: Array[Operation::Base]
 
-        attr_reader operations: Array[Hash[Symbol, untyped]]
+        attr_reader operations: Array[Operation::Base]
 
         def initialize: () -> void
 
-        def add: (String path, value: untyped) -> untyped
+        def add: (String path, value: untyped) -> void
 
-        def copy: (from: String, path: String) -> untyped
+        def copy: (from: String, path: String) -> void
 
-        def move: (from: String, path: String) -> untyped
+        def move: (from: String, path: String) -> void
 
-        def remove: (String path) -> untyped
+        def remove: (String path) -> void
 
-        def replace: (String path, value: untyped) -> untyped
+        def replace: (String path, value: untyped) -> void
 
-        def test: (String path, value: untyped) -> untyped
+        def test: (String path, value: untyped) -> void
       end
     end
   end

@@ -43,7 +43,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new('foo' => 'bar')
 
         expect { document.fetch(pointer) }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new(['x'])
 
         expect { document.fetch(pointer) }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new([])
 
         expect { document.add(pointer, 'a') }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
 
@@ -107,7 +107,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new('foo' => 'not an object')
 
         expect { document.add(pointer, 'baz') }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new('foo' => {})
 
         expect { document.add(pointer, 'baz') }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
 
@@ -162,7 +162,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new('foo' => 'not an object')
 
         expect { document.remove(pointer) }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new('foo' => 'bar')
 
         expect { document.remove(pointer) }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
 
@@ -182,7 +182,7 @@ RSpec.describe JSON::Patch::TargetDocument do
         document = described_class.new(['x'])
 
         expect { document.remove(pointer) }
-          .to raise_error(described_class::Error)
+          .to raise_error(JSON::Patch::Error)
       end
     end
 

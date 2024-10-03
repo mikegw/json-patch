@@ -12,9 +12,9 @@ module JSON
 
       def fetch: (String raw_pointer) -> untyped
 
-      def add: (String raw_pointer, untyped value) -> untyped
+      def add: (String raw_pointer, untyped value) -> void
 
-      def remove: (String raw_pointer) -> untyped
+      def remove: (String raw_pointer) -> void
 
       def to_json: () -> (String | nil)
 
@@ -26,11 +26,13 @@ module JSON
 
       def fetch_reference: (untyped raw_document, JSON::Pointer::ReferenceToken token) -> untyped
 
-      def validate_container!: (untyped raw_document, JSON::Pointer::ReferenceToken token) -> (nil | untyped)
+      def validate_container!: (untyped raw_document, JSON::Pointer::ReferenceToken token, JSON::Pointer::ReferenceToken next_token) -> (nil | untyped)
 
       def validate_index!: (untyped container, JSON::Pointer::ReferenceToken token, ?allow_next_element: bool) -> (nil | untyped)
 
       def validate_key!: (untyped container, JSON::Pointer::ReferenceToken token) -> (nil | untyped)
+
+      def empty_token: -> JSON::Pointer::ReferenceToken
     end
   end
 end

@@ -1,12 +1,15 @@
 module JSON
   module Patch
     module Operation
-      def self.new: (Hash[Symbol | String, untyped] raw_operation) -> Base
+      def self.new: (**untyped raw_operation) -> Base
 
       class Base
         @raw: Hash[Symbol, untyped]
+        @path: String
 
-        def initialize: (Hash[Symbol | String, untyped]) -> void
+        attr_reader path: String
+
+        def initialize: (**untyped raw_operation) -> void
 
         def call: (TargetDocument _document) -> void
 
@@ -15,44 +18,60 @@ module JSON
         private
 
         def fetch_member: (Symbol key, ?allow_nil: bool) -> untyped
+
+        def populate!: -> void
       end
 
       class Add < Base
-        def call: (TargetDocument document) -> untyped
-      end
+        @value: untyped
+        attr_reader value: untyped
 
-      class Remove < Base
-        def call: (TargetDocument document) -> untyped
-      end
-
-      class Replace < Base
-        def call: (TargetDocument document) -> untyped
-      end
-
-      class Move < Base
-        def call: (TargetDocument document) -> untyped
+        def initialize: (op: ('add'|:add), path: String, value: untyped) -> void
       end
 
       class Copy < Base
         include Duplicate
+        @from: String
+        attr_reader from: String
 
-        def call: (TargetDocument document) -> untyped
+        def initialize: (op: ('copy'|:copy), path: String, from: String) -> void
+      end
+
+      class Move < Base
+        @from: String
+        attr_reader from: String
+
+        def initialize: (op: ('move'|:move), path: String, from: String) -> void
+      end
+
+      class Remove < Base
+        def initialize: (op: ('remove'|:remove), path: String) -> void
+      end
+
+      class Replace < Base
+        @value: untyped
+        attr_reader value: untyped
+
+        def initialize: (op: ('replace'|:replace), path: String, value: untyped) -> void
       end
 
       class Test < Base
-        def call: (TargetDocument document) -> (nil | untyped)
+        @value: untyped
+        attr_reader value: untyped
+
+        def initialize: (op: ('test'|:test), path: String, value: untyped) -> void
       end
 
       private
 
-      def self.determine_operation_class: (String) -> (
+      def self.determine_operation_class: (String) -> (Class & (
         singleton(Add) |
         singleton(Copy) |
         singleton(Move) |
         singleton(Remove) |
         singleton(Replace) |
         singleton(Test)
-      )
+      ))
     end
   end
 end

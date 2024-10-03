@@ -4,13 +4,13 @@ RSpec.describe JSON::Patch::Operation do
   describe 'an "add" operation' do
     it 'must contain a "path" member' do
       expect do
-       described_class.new('op' => 'add', 'value' => 'foo')
+        described_class.new('op' => 'add', 'value' => 'foo')
       end.to raise_error(JSON::Patch::Error)
     end
 
     it 'must contain a "value" member' do
       expect do
-       described_class.new('op' => 'add', 'path' => '/foo')
+        described_class.new('op' => 'add', 'path' => '/foo')
       end.to raise_error(JSON::Patch::Error)
     end
 
@@ -104,13 +104,13 @@ RSpec.describe JSON::Patch::Operation do
   describe 'a "remove" operation' do
     it 'must contain a "path" member' do
       expect do
-       described_class.new('op' => 'remove')
+        described_class.new('op' => 'remove')
       end.to raise_error(JSON::Patch::Error)
     end
 
     it 'removes the value at the target location' do
       target = JSON::Patch::TargetDocument.new('{"foo":"bar"}')
-      operation =described_class.new('op' => 'remove', 'path' => '/foo')
+      operation = described_class.new('op' => 'remove', 'path' => '/foo')
 
       operation.call(target)
 
@@ -120,7 +120,7 @@ RSpec.describe JSON::Patch::Operation do
     context 'when the target location does not exist' do
       it 'raises an error' do
         target = JSON::Patch::TargetDocument.new('{"foo":"bar"}')
-        operation =described_class.new('op' => 'remove', 'path' => '/missing')
+        operation = described_class.new('op' => 'remove', 'path' => '/missing')
 
         expect { operation.call(target) }.to raise_error(JSON::Patch::Error)
       end
@@ -130,7 +130,7 @@ RSpec.describe JSON::Patch::Operation do
       it 'shifts any elements above the specified index ' \
          'one position to the left' do
         target = JSON::Patch::TargetDocument.new('{"a":["x","y","z"]}')
-        operation =described_class.new('op' => 'remove', 'path' => '/a/1')
+        operation = described_class.new('op' => 'remove', 'path' => '/a/1')
 
         operation.call(target)
 
@@ -142,13 +142,13 @@ RSpec.describe JSON::Patch::Operation do
   describe 'a "replace" operation' do
     it 'must contain a "path" member' do
       expect do
-       described_class.new('op' => 'replace', 'value' => 'foo')
+        described_class.new('op' => 'replace', 'value' => 'foo')
       end.to raise_error(JSON::Patch::Error)
     end
 
     it 'must contain a "value" member' do
       expect do
-       described_class.new('op' => 'replace', 'path' => '/foo')
+        described_class.new('op' => 'replace', 'path' => '/foo')
       end.to raise_error(JSON::Patch::Error)
     end
 
@@ -176,13 +176,13 @@ RSpec.describe JSON::Patch::Operation do
   describe 'a "move" operation' do
     it 'must contain a "path" member' do
       expect do
-       described_class.new('op' => 'move', 'from' => '/old')
+        described_class.new('op' => 'move', 'from' => '/old')
       end.to raise_error(JSON::Patch::Error)
     end
 
     it 'must contain a "from" member' do
       expect do
-       described_class.new('op' => 'move', 'path' => '/new')
+        described_class.new('op' => 'move', 'path' => '/new')
       end.to raise_error(JSON::Patch::Error)
     end
 
@@ -222,13 +222,13 @@ RSpec.describe JSON::Patch::Operation do
   describe 'a "copy" operation' do
     it 'must contain a "path" member' do
       expect do
-       described_class.new('op' => 'copy', 'from' => '/old')
+        described_class.new('op' => 'copy', 'from' => '/old')
       end.to raise_error(JSON::Patch::Error)
     end
 
     it 'must contain a "from" member' do
       expect do
-       described_class.new('op' => 'copy', 'path' => '/new')
+        described_class.new('op' => 'copy', 'path' => '/new')
       end.to raise_error(JSON::Patch::Error)
     end
 
@@ -257,13 +257,13 @@ RSpec.describe JSON::Patch::Operation do
   describe 'a "test" operation' do
     it 'must contain a "path" member' do
       expect do
-       described_class.new('op' => 'test', 'value' => 'foo')
+        described_class.new('op' => 'test', 'value' => 'foo')
       end.to raise_error(JSON::Patch::Error)
     end
 
     it 'must contain a "value" member' do
       expect do
-       described_class.new('op' => 'test', 'path' => '/foo')
+        described_class.new('op' => 'test', 'path' => '/foo')
       end.to raise_error(JSON::Patch::Error)
     end
 
