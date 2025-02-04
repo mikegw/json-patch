@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe JSON::Patch::TargetDocument do
+  it 'can be represented as JSON' do
+    document = described_class.new('foo' => 'bar')
+
+    expect(document.as_json).to eq('foo' => 'bar')
+  end
+
   describe '#fetch' do
     it 'can fetch the whole document' do
       pointer = ''

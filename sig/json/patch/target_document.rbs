@@ -10,6 +10,8 @@ module JSON
 
       def initialize: (untyped raw) -> void
 
+      def as_json: (*untyped) -> untyped
+
       def fetch: (String raw_pointer) -> untyped
 
       def add: (String raw_pointer, untyped value) -> void

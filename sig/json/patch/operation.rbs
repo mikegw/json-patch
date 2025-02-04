@@ -11,6 +11,8 @@ module JSON
 
         def initialize: (**untyped raw_operation) -> void
 
+        def as_json: (*untyped) -> Hash[Symbol, String]
+
         def call: (TargetDocument _document) -> void
 
         def to_json: (*untyped) -> String

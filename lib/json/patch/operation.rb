@@ -39,6 +39,10 @@ module JSON
           raise NoMethodError, "#{self.class} is missing an implementation of #call"
         end
 
+        def as_json(*)
+          @raw
+        end
+
         def to_json(*_args)
           @raw.to_json
         end

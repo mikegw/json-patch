@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe JSON::Patch::Operation do
+  it 'can be represented as JSON' do
+    operation = described_class.new(op: 'add', path: '/', value: 123)
+
+    expect(operation.as_json).to eq(op: 'add', path: '/', value: 123)
+  end
+
   describe 'an "add" operation' do
     it 'must contain a "path" member' do
       expect do
