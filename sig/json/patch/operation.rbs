@@ -22,6 +22,8 @@ module JSON
         def fetch_member: (Symbol key, ?allow_nil: bool) -> untyped
 
         def populate!: -> void
+
+        def validate_path!: (String path) -> void
       end
 
       class Add < Base

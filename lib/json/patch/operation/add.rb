@@ -13,7 +13,6 @@ module JSON
         private
 
         def populate!
-          super
           @value = fetch_member(:value, allow_nil: true)
         end
       end

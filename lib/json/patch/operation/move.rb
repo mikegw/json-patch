@@ -14,7 +14,6 @@ module JSON
         private
 
         def populate!
-          super
           @from = fetch_member(:from)
         end
       end

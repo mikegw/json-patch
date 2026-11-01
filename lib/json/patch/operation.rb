@@ -32,6 +32,9 @@ module JSON
         def initialize(**raw)
           @raw = raw.transform_keys(&:to_sym)
 
+          @path = fetch_member(:path)
+          validate_path!(@path)
+
           populate!
         end
 
@@ -61,10 +64,10 @@ module JSON
           @raw[key]
         end
 
-        def populate!
-          @path = fetch_member(:path)
+        def populate!; end
 
-          JSON::Pointer.new(@path) # will throw error if invalid path
+        def validate_path!(path)
+          JSON::Pointer.new(path) # will throw error if invalid path
         rescue JSON::Pointer::Error => e
           raise InvalidPointer, e.message
         end
