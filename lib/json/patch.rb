@@ -3,6 +3,7 @@
 module JSON
   module Patch
     class Error < StandardError; end
+    class InvalidJSON < Error; end
     class InvalidOperation < Error; end
     class InvalidPointer < Error; end
     class MissingTarget < Error; end

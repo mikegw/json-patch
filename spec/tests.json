@@ -50,10 +50,9 @@
     "expected": {"foo":1} },
 
   { "comment": "Toplevel scalar values OK?",
-    "doc": "foo",
+    "doc": "\"foo\"",
     "patch": [{"op": "replace", "path": "", "value": "bar"}],
-    "expected": "bar",
-    "disabled": true },
+    "expected": "bar" },
 
   { "comment": "replace object document with array document?",
     "doc": {},
@@ -440,10 +439,8 @@
 
   { "comment": "duplicate ops",
     "doc": { "foo": "bar" },
-    "patch": [ { "op": "add", "path": "/baz", "value": "qux",
-      "op": "move", "from":"/foo" } ],
-    "error": "patch has two 'op' members",
-    "disabled": true },
+    "patch": "[ { \"op\": \"add\", \"path\": \"/baz\", \"value\": \"qux\", \"op\": \"move\", \"from\":\"/foo\" } ]",
+    "error": "patch has two 'op' members" },
 
   { "comment": "unrecognized op should fail",
     "doc": {"foo": 1},
@@ -478,7 +475,6 @@
   { "comment": "Patch with different capitalisation than doc",
     "doc": {"foo":"bar"},
     "patch": [{"op": "add", "path": "/FOO", "value": "BAR"}],
-    "expected": {"foo": "bar", "FOO": "BAR"}
-  }
+    "expected": {"foo": "bar", "FOO": "BAR"} }
 
 ]

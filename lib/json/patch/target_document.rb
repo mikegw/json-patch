@@ -7,7 +7,10 @@ module JSON
   module Patch
     class TargetDocument
       def initialize(raw)
-        @raw = raw.is_a?(String) ? JSON.parse(raw) : duplicate(raw)
+        @raw =
+          raw.is_a?(String) ? JSON.parse(raw, allow_duplicate_key: false) : duplicate(raw)
+      rescue JSON::ParserError => e
+        raise InvalidJSON, e.message
       end
 
       def fetch(raw_pointer)

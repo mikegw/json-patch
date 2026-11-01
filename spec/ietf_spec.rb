@@ -5,21 +5,25 @@ require 'json'
 tests = JSON.parse(File.read(File.join(__dir__, './tests.json')))
 
 RSpec.describe JSON::Patch, 'satisfies the IETF patch tests' do
+  def serialize(doc)
+    doc.is_a?(String) ? doc : doc.to_json
+  end
+
   tests.each_with_index do |test, index|
     next if test['disabled']
 
     if test['error']
       it "satisfies Test #{index}: #{test['error']}" do
-        document = test['doc'].to_json
-        patch = test['patch'].to_json
+        document = serialize(test['doc'])
+        patch = serialize(test['patch'])
 
         expect { described_class.call(document, patch) }
           .to raise_error(described_class::Error)
       end
     else
       it "satisfies Test #{index}#{": #{test['comment']}" if test.key?('comment')}" do
-        document = test['doc'].to_json
-        patch = test['patch'].to_json
+        document = serialize(test['doc'])
+        patch = serialize(test['patch'])
 
         result = JSON.parse(described_class.call(document, patch))
 

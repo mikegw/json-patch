@@ -5,6 +5,9 @@ module JSON
     class Error < StandardError
     end
 
+    class InvalidJSON < Error
+    end
+
     class InvalidOperation < Error
     end
 

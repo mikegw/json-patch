@@ -23,10 +23,13 @@ module JSON
       def initialize(raw)
         (@operations = raw and return) if raw.is_a?(Array) && raw.all?(Operation::Base)
 
-        raw_operations = raw.is_a?(String) ? JSON.parse(raw) : duplicate(raw)
+        raw_operations =
+          raw.is_a?(String) ? JSON.parse(raw, allow_duplicate_key: false) : duplicate(raw)
         raw_operations.each { _1.transform_keys!(&:to_sym) }
 
         @operations = raw_operations.map { Operation.new(**_1) }
+      rescue JSON::ParserError => e
+        raise InvalidJSON, e.message
       end
 
       def apply(target_document)
