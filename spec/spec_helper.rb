@@ -3,7 +3,9 @@
 require 'simplecov'
 SimpleCov.start do
   enable_coverage :branch
-  add_filter 'spec'
+  # `skip` replaces the deprecated `add_filter` in simplecov 1.x, but older
+  # versions (needed on older Rubies) only have `add_filter`.
+  respond_to?(:skip) ? skip('spec') : add_filter('spec')
 end
 
 require 'json/patch'

@@ -10,9 +10,11 @@ target :lib do
   # check "app/models/**/*.rb"        # Glob
   # ignore "lib/templates/*.rb"
 
-  library 'json'
-  library 'forwardable'
   library 'delegate'
+  library 'forwardable'
+  library 'json'
+  library 'json-pointer'
+  library 'prism'
 
   # configure_code_diagnostics(D::Ruby.default)      #  (applies by default)
   # configure_code_diagnostics(D::Ruby.strict)       # `strict` diagnostics setting
